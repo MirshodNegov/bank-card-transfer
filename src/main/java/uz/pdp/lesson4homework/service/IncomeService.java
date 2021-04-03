@@ -24,13 +24,7 @@ public class IncomeService {
         String token = httpServletRequest.getHeader("Authorization");
         token = token.substring(7);
         String userName = jwtProvider.getUserNameFromToken(token);
-        List<Income> userIncome = new ArrayList<>();
-        List<Income> all = incomeRepository.findAll();
-        for (Income income : all) {
-            if (income.getTo_card().getUsername().equals(userName))
-                userIncome.add(income);
-        }
-        return userIncome;
+        return incomeRepository.findAllByFromCardUsername(userName);
     }
 
     public ApiResponse getOne(Integer id, HttpServletRequest httpServletRequest) {

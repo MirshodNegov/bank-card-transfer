@@ -80,14 +80,7 @@ public class OutcomeService {
         String token = httpServletRequest.getHeader("Authorization");
         token = token.substring(7);
         String userName = jwtProvider.getUserNameFromToken(token);
-        List<Outcome> userOutcome = new ArrayList<>();
-
-        List<Outcome> all = outcomeRepository.findAll();
-        for (Outcome outcome : all) {
-            if (outcome.getFrom_card().getUsername().equals(userName))
-                userOutcome.add(outcome);
-        }
-        return userOutcome;
+        return outcomeRepository.findAllByFromCardUsername(userName);
     }
 
     public ApiResponse getOne(Integer id, HttpServletRequest httpServletRequest) {

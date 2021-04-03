@@ -41,14 +41,7 @@ public class CardService {
         String token = request.getHeader("Authorization");
         token = token.substring(7);
         String userName = jwtProvider.getUserNameFromToken(token);
-        List<Card> userCards=new ArrayList<>();
-        List<Card> cardList = cardRepository.findAll();
-        for (Card card : cardList) {
-            if (card.getUsername().equals(userName)){
-                userCards.add(card);
-            }
-        }
-        return userCards;
+        return cardRepository.findAllByUsername(userName);
     }
 
     public Card getOne(Integer id, HttpServletRequest httpServletRequest) {
